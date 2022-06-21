@@ -8,7 +8,7 @@ from django.contrib import messages
 def make_crawled(self, request, queryset):
     all = queryset.all()
     for link in all:
-        print(link.url)
+        print(link)
     updated = queryset.update(status=True)
     self.message_user(request, ngettext(
         '%d Link was successfully marked as published.',
@@ -25,5 +25,5 @@ class LinkToCrawlAdmin(admin.ModelAdmin):
 
 @admin.register(CrawledLink)
 class LinkToCrawlAdmin(admin.ModelAdmin):
-    list_display = ('url', 'created_at', 'updated_at')
+    list_display = ('url', 'link_to_crawl', 'created_at', 'updated_at')
     actions = [make_crawled]
