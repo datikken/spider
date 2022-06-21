@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import LinkToCrawl
+from .models import LinkToCrawl, CrawledLink
 from django.utils.translation import ngettext
 from django.contrib import messages
 
@@ -16,7 +16,14 @@ def make_crawled(self, request, queryset):
         updated,
     ) % updated, messages.SUCCESS)
 
+
 @admin.register(LinkToCrawl)
 class LinkToCrawlAdmin(admin.ModelAdmin):
     list_display = ('url', 'status', 'created_at', 'updated_at')
+    actions = [make_crawled]
+
+
+@admin.register(CrawledLink)
+class LinkToCrawlAdmin(admin.ModelAdmin):
+    list_display = ('url', 'created_at', 'updated_at')
     actions = [make_crawled]
